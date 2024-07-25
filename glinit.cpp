@@ -1,31 +1,38 @@
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include "glinit.h"
+
+using namespace cv;
 
 void initTextures()
 {	
 	int width, height, channels = 1;
 	
 	// read images into memory to generate textures
-	unsigned char* textureMapData = SOIL_load_image("res/texturemap.jpg", &width, &height, 0, SOIL_LOAD_RGB);
-	unsigned char* heightMapData  = SOIL_load_image("res/heightmap.jpg", &width, &height, &channels, SOIL_LOAD_L);
+	Mat textureMap = imread("res/texturemap.jpg", IMREAD_COLOR);
+	Mat heightMap  = imread("res/heightmap.jpg", IMREAD_GRAYSCALE);
+	//unsigned char* textureMapData = SOIL_load_image("res/texturemap.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+	//unsigned char* heightMapData  = SOIL_load_image("res/heightmap.jpg", &width, &height, &channels, SOIL_LOAD_L);
 	
 	// TODO: Generate texture map and height map for the Earth
-		glGenTextures(1, &gTextureHeightMap);
+	flip(heightMap,heightMap,0);
+	glGenTextures(1, &gTextureHeightMap);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, gTextureHeightMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0, GL_LUMINANCE,GL_UNSIGNED_BYTE, heightMapData);
-    SOIL_free_image_data(heightMapData);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, heightmap.cols, heightmap.rows, 0, GL_LUMINANCE,GL_UNSIGNED_BYTE, heightMap.ptr());
+    //SOIL_free_image_data(heightMapData);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    
-	printf("HeightMap Info: %s\n", result_string_pointer);
+	//printf("HeightMap Info: %s\n", result_string_pointer);
 	
 	
 	glGenTextures(1, &gTextureColorMap);		
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, gTextureColorMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,GL_UNSIGNED_BYTE, textureMapData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureMap.cols, textureMap.rows, 0, GL_RGB,GL_UNSIGNED_BYTE, textureMap.data);
     SOIL_free_image_data(textureMapData);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

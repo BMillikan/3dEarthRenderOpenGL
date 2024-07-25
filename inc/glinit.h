@@ -7,14 +7,14 @@
 #include <cstdio>
 #include <GL/gl.h>   
 #include <GL/glut.h> 
-#include "SOIL.h"
+//#include "SOIL.h"
 #include "utils.h"
 #include "glentry.h"
 #include <vector>
 #include <cmath>
 using namespace std;
 
-extern char * result_string_pointer; 	// used to print logs of image loading -- Externed from SOIL.h
+//extern char * result_string_pointer; 	// used to print logs of image loading -- Externed from SOIL.h
 
 extern GLuint gProgramCubeMap;			// used in program generation -- Externed from main.cpp
 extern GLuint gTextureCubeMap;			// used in texture generation -- Externed from main.cpp
