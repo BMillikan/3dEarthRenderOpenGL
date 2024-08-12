@@ -18,9 +18,9 @@ void junk() {
 using namespace std;
 
 
-GLuint gProgramCubeMap;					// program handler of the cube map with two attached shaders: CubeMap.vert, CubeMap.frag
+//GLuint gProgramCubeMap;					// program handler of the cube map with two attached shaders: CubeMap.vert, CubeMap.frag
 
-GLuint gTextureCubeMap;					// texture handler for the cube map. 
+//GLuint gTextureCubeMap;					// texture handler for the cube map. 
 
 GLuint gVerticesVBO, gIndicesVBO;		// Vertex Buffer Objects for the cubemap's indices and vertices.
 

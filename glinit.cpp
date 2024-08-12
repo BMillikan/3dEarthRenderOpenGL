@@ -15,7 +15,7 @@ void initTextures()
 	//unsigned char* heightMapData  = SOIL_load_image("res/heightmap.jpg", &width, &height, &channels, SOIL_LOAD_L);
 	
 	// TODO: Generate texture map and height map for the Earth
-	flip(heightMap,heightMap,0);
+	flip(heightMap, heightMap, 0);
 	glGenTextures(1, &gTextureHeightMap);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, gTextureHeightMap);
@@ -28,40 +28,40 @@ void initTextures()
    
 	//printf("HeightMap Info: %s\n", result_string_pointer);
 	
-	
+	flip(textureMap, textureMap, 0);
 	glGenTextures(1, &gTextureColorMap);		
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, gTextureColorMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureMap.cols, textureMap.rows, 0, GL_RGB,GL_UNSIGNED_BYTE, textureMap.data);
-    SOIL_free_image_data(textureMapData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_BGR, textureMap.cols, textureMap.rows, 0, GL_RGB,GL_UNSIGNED_BYTE, textureMap.ptr());
+    //SOIL_free_image_data(textureMapData);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	
-	printf("ColorMap Info: %s\n", result_string_pointer);
+	//printf("ColorMap Info: %s\n", result_string_pointer);
 	// Generate CubeMap
-	glGenTextures(1, &gTextureCubeMap);
-	glActiveTexture(GL_TEXTURE2);
+	//glGenTextures(1, &gTextureCubeMap);
+	//glActiveTexture(GL_TEXTURE2);
 	
-	glBindTexture(GL_TEXTURE_2D, gTextureCubeMap);
-	gTextureCubeMap = SOIL_load_OGL_single_cubemap("res/cubemap.jpg", "WNESUD", SOIL_LOAD_AUTO, gTextureCubeMap, SOIL_FLAG_MIPMAPS);
+	//glBindTexture(GL_TEXTURE_2D, gTextureCubeMap);
+	//gTextureCubeMap = SOIL_load_OGL_single_cubemap("res/cubemap.jpg", "WNESUD", SOIL_LOAD_AUTO, gTextureCubeMap, SOIL_FLAG_MIPMAPS);
 	
-	printf("CubeMap Info: %s\n", result_string_pointer);
-	glGenerateMipmap(GL_TEXTURE_2D);
+	//printf("CubeMap Info: %s\n", result_string_pointer);
+	//glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void initShaders()
 {
 	// Creation and initialization of CubeMap's shaders
-	gProgramCubeMap = glCreateProgram();
+	//gProgramCubeMap = glCreateProgram();
 	
-    glAttachShader(gProgramCubeMap, createVS("res/cubemap.vert"));
-    glAttachShader(gProgramCubeMap, createFS("res/cubemap.frag"));
+    //glAttachShader(gProgramCubeMap, createVS("res/cubemap.vert"));
+    //glAttachShader(gProgramCubeMap, createFS("res/cubemap.frag"));
     
-    glLinkProgram(gProgramCubeMap);
+    //glLinkProgram(gProgramCubeMap);
     
-	glUniform1i(glGetUniformLocation(gProgramCubeMap, "cubeMap")   , 2);
+	//glUniform1i(glGetUniformLocation(gProgramCubeMap, "cubeMap")   , 2);
 	
 	// TODO: Create and initialize new program(s) to use new shader(s)
 	gProgramEarth = glCreateProgram();
